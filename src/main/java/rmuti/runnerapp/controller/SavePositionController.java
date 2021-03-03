@@ -30,9 +30,9 @@ public class SavePositionController {
         return res;
     }
     @PostMapping("/show")
-    public Object show(@RequestParam int userId,@RequestParam int id){
+    public Object show(@RequestParam int userId,@RequestParam int id,@RequestParam String dateNow){
         APIResponse res = new APIResponse();
-        List<SavePosition> savePositions = savePositionRepository.findByUserIdAndId(userId, id);
+        List<SavePosition> savePositions = savePositionRepository.findByUserIdAndIdAndDateNow(userId, id,dateNow);
         res.setData(savePositions);
         return res;
     }

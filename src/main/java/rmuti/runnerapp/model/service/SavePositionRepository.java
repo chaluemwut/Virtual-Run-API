@@ -6,5 +6,5 @@ import rmuti.runnerapp.model.table.SavePosition;
 import java.util.List;
 
 public interface SavePositionRepository extends JpaRepository<SavePosition,Integer> {
-    List<SavePosition> findByUserIdAndId(int UserId,int Id);
+    List<SavePosition> findByUserIdAndIdAndDateNow(int UserId,int Id,String DateNow);
 }
