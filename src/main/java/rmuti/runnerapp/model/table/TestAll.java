@@ -23,6 +23,8 @@ public class TestAll {
     private String dateEnd;
     @Column(name = "img_all")
     private String imgAll;
+    @Column(name = "user_id")
+    private int userId;
 
     //เปลี่ยน string เป็น date
 }

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import rmuti.runnerapp.config.Config;
 import rmuti.runnerapp.model.service.RankingRepository;
 import rmuti.runnerapp.model.table.Ranking;
 
@@ -74,7 +75,7 @@ public class RankingController {
             if(fileImg != null){
                 char a = (char) (random.nextInt(26)+'a');
                 ranking.setImgRanking(String.valueOf(a)+".png");
-                File fileToSave = new File("E://virtualrun//imgdata//ranking//"+ranking.getImgRanking());
+                File fileToSave = new File(Config.imgRank+ranking.getImgRanking());
                 fileImg.transferTo(fileToSave);
                 ranking = rankingRepository.save(ranking);
                 res.setData(ranking);
@@ -92,7 +93,7 @@ public class RankingController {
     @RequestMapping(value = "/image", method = RequestMethod.GET, produces = MediaType.IMAGE_PNG_VALUE)
     public byte[] getResource (@RequestParam String imgProfile) throws Exception{
         try {
-            InputStream in = new FileInputStream("E://virtualrun//imgdata//ranking//"+imgProfile);
+            InputStream in = new FileInputStream(Config.imgRank+imgProfile);
             var inImg =  IOUtils.toByteArray(in);
             in.close();
             return inImg;

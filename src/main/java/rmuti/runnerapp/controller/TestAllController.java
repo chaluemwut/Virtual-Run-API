@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import rmuti.runnerapp.config.Config;
 import rmuti.runnerapp.model.service.TestAllRepository;
 import rmuti.runnerapp.model.table.TestAll;
 
@@ -53,7 +54,7 @@ public class TestAllController {
             if(fileImg != null){
                 char a = (char) (random.nextInt(26)+'a');
                 testAll.setImgAll(String.valueOf(a)+".png");
-                File fileToSave = new File("E://virtualrun//imgdata//allrun//"+testAll.getImgAll());
+                File fileToSave = new File(Config.imgAll+testAll.getImgAll());
                 fileImg.transferTo(fileToSave);
                 testAll = testAllRepository.save(testAll);
                 res.setData(testAll);
@@ -69,7 +70,7 @@ public class TestAllController {
     @RequestMapping(value = "/image", method = RequestMethod.GET, produces = MediaType.IMAGE_PNG_VALUE)
     public byte[] getResource (@RequestParam String imgAll) throws Exception{
         try {
-            InputStream in = new FileInputStream("E://virtualrun//imgdata//allrun//"+imgAll);
+            InputStream in = new FileInputStream(Config.imgAll+imgAll);
             var inImg =  IOUtils.toByteArray(in);
             in.close();
             return inImg;
@@ -78,13 +79,21 @@ public class TestAllController {
         }
     }
     @PostMapping("/remove")
-    public Object remove(@RequestParam int id){
+    public Object remove(@RequestParam int id,@RequestParam int userId){
         APIResponse res = new APIResponse();
-        TestAll testAll = testAllRepository.findById(id).get();
+        String img = null;
+        List<TestAll> testAll = testAllRepository.findByIdAndUserId(id,userId);
+        for(var i=0;i<testAll.size();i++){
+            var sum = testAll.get(i);
+            System.out.println(sum);
+            img = sum.getImgAll();
+            System.out.println(img);
+        }
+        System.out.println(img);
         System.out.println(testAll);
         try{
 
-            File fileToDelete = new File("E://virtualrun//imgdata//allrun//"+testAll.getImgAll());
+            File fileToDelete = new File(Config.imgAll+img);
             Files.delete(Path.of(String.valueOf(fileToDelete)));
             testAllRepository.deleteById(id);
             res.setStatus(0);
