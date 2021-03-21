@@ -15,6 +15,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 @RestController
@@ -77,6 +78,38 @@ public class TestAllController {
         }catch (Exception e){
             return null;
         }
+    }
+    @PostMapping("update_list")
+    public Object updateList (TestAll testAll,@RequestParam(value = "fileImg",required = false)MultipartFile fileImg ){
+        APIResponse res = new APIResponse();
+        Random random = new Random();
+        try{
+            if(fileImg != null){
+                Optional<TestAll> testAllDb = testAllRepository.findById(testAll.getId());
+                File fileDelete = new File(Config.imgAll+testAllDb.get().getImgAll());
+                if(fileDelete.delete()){
+                    System.out.println("File deleted successfully");
+                }else{
+                    System.out.println("Failed to delete the file");
+                }
+                char a = (char) (random.nextInt(26)+'a');
+                testAll.setImgAll(String.valueOf(a)+".png");
+                File fileToSave = new File(Config.imgAll+testAll.getImgAll());
+                fileImg.transferTo(fileToSave);
+                testAll = testAllRepository.save(testAll);
+                res.setData(testAll);
+                res.setStatus(1);
+            }else{
+                Optional<TestAll> testAllDb = testAllRepository.findById(testAll.getId());
+                testAll.setImgAll(testAllDb.get().getImgAll());
+                testAll = testAllRepository.save(testAll);
+            }
+
+        }catch (Exception e){
+            res.setMessage("err");
+            res.setStatus(0);
+        }
+        return res;
     }
     @PostMapping("/remove")
     public Object remove(@RequestParam int id,@RequestParam int userId){

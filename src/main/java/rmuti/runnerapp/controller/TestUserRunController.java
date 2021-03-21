@@ -61,7 +61,9 @@ public class TestUserRunController {
         List<TestAll> retAllRun = new ArrayList<>();
         for(var i=0;i< value.size();i++) {
             var sum = value.get(i);
+            System.out.println(sum);
             List<TestAll> allRuns = testAllRepository.findByid(sum);
+            System.out.println(allRuns);
             var aa = allRuns.get(0);
             retAllRun.add(aa);
         }
