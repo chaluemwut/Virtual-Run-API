@@ -84,7 +84,7 @@ public class TestAllController {
             return null;
         }
     }
-    @PostMapping("update_list")
+    @PostMapping("/update_list")
     public Object updateList (TestAll testAll,@RequestParam(value = "fileImg",required = false)MultipartFile fileImg ){
         APIResponse res = new APIResponse();
         Random random = new Random();
@@ -135,7 +135,7 @@ public class TestAllController {
             Files.delete(Path.of(String.valueOf(fileToDelete)));
             testAllRepository.deleteById(id);
             res.setStatus(0);
-            res.setMessage("Remove product success!");
+            res.setMessage("Remove List success!");
 
         }catch (Exception e){
             e.printStackTrace();

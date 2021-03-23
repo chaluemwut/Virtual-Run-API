@@ -7,4 +7,9 @@ import java.util.List;
 
 public interface SavePositionRepository extends JpaRepository<SavePosition,Integer> {
     List<SavePosition> findByUserIdAndIdAndDateNow(int UserId,int Id,String DateNow);
+
+    List<SavePosition> findByIdAndUserId(int Id,int UserId);
+
+    List<SavePosition> deleteByIdAndUserId(int id, int userId);
+
 }
