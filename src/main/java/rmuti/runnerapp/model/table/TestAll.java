@@ -3,6 +3,7 @@ package rmuti.runnerapp.model.table;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Data
 @Entity(name = "test_all")
@@ -25,6 +26,10 @@ public class TestAll {
     private String imgAll;
     @Column(name = "user_id")
     private int userId;
+    @Column
+    private String price;
+    @Column(name = "create_date")
+    private Date createDate = new Date();
 
     //เปลี่ยน string เป็น date
 }

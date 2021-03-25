@@ -8,4 +8,6 @@ import java.util.List;
 public interface TestUserRunRepository extends JpaRepository<TestUserRun,Integer> {
     List<TestUserRun> findByUserId(int userId);
     TestUserRun findByIdAndUserId(int Id,int UserId);
+    List<TestUserRun> findByid(int id);
+    List<TestUserRun> findByidAndUserId(int id,int UserId);
 }

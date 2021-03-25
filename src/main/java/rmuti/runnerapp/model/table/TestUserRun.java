@@ -3,6 +3,7 @@ package rmuti.runnerapp.model.table;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Data
 @Entity(name = "test_run")
@@ -14,4 +15,12 @@ public class TestUserRun {
     private int userId;
     @Column
     private int id;
+    @Column
+    private String size;
+    @Column(name = "create_date")
+    private Date createDate = new Date();
+    @Column
+    private String status;
+    @Column(name = "img_slip")
+    private String imgSlip;
 }
